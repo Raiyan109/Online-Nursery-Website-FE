@@ -1,15 +1,15 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { MotionConfig, motion } from "framer-motion";
 
-export const Example = ({ handleClick}) => {
+export const Example = ({ handleClick }) => {
   return (
-    <div className="grid h-screen place-content-center bg-gradient-to-br from-violet-500 to-indigo-500"  onClick={handleClick}>
+    <div className="grid h-screen place-content-center bg-gradient-to-br from-violet-500 to-indigo-500" onClick={handleClick}>
       <AnimatedHamburgerButton handleClick={handleClick} />
     </div>
   );
 };
 
-const AnimatedHamburgerButton = ({handleClick}) => {
+const AnimatedHamburgerButton = ({ handleClick }) => {
   const [active, setActive] = useState(false);
 
   const onButtonClick = () => {
@@ -29,21 +29,21 @@ const AnimatedHamburgerButton = ({handleClick}) => {
         animate={active ? "open" : "closed"}
         // onClick={() => setActive((pv) => !pv)}
         onClick={onButtonClick}
-        className="relative h-12 w-12 rounded-full bg-white/0 transition-colors hover:bg-white/20"
+        className="relative h-12 w-12 rounded-full transition-colors "
       >
         <motion.span
           variants={VARIANTS.top}
-          className="absolute h-1 w-9 bg-black"
+          className="absolute h-1 w-9 bg-lightGreen"
           style={{ y: "-50%", left: "50%", x: "-50%", top: "35%" }}
         />
         <motion.span
           variants={VARIANTS.middle}
-          className="absolute h-1 w-9 bg-black"
+          className="absolute h-1 w-9 bg-lightGreen"
           style={{ left: "50%", x: "-50%", top: "50%", y: "-50%" }}
         />
         <motion.span
           variants={VARIANTS.bottom}
-          className="absolute h-1 w-4 bg-black"
+          className="absolute h-1 w-4 bg-lightGreen"
           style={{
             x: "-50%",
             y: "50%",

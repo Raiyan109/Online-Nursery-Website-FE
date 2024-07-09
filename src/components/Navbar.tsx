@@ -43,7 +43,7 @@ const Navbar = () => {
           <FaBars className="text-xl" />
         )}
       </button> */}
-      <div className="flex-1 md:hidden text-neutral-600 dark:text-neutral-300 ease-in-out duration-300 flex items-center justify-end">
+      <div className="flex-1 md:hidden ease-in-out duration-300 flex items-center justify-end">
         <AnimatedHamburgerButton handleClick={handleClick}
         />
       </div>
@@ -53,15 +53,15 @@ const Navbar = () => {
         className={`${open
           ? "flex absolute top-14 left-0 w-full h-auto md:h-auto md:relative"
           : "hidden"
-          } flex-1 md:flex flex-col md:flex-row gap-x-5 gap-y-2 md:items-center md:p-0 sm:p-4 p-4 justify-between md:bg-transparent bg-neutral-100 md:shadow-none shadow-md rounded-md`}
+          } flex-1 md:flex flex-col md:flex-row gap-x-5 gap-y-2 md:items-center md:p-0 sm:p-4 p-4 justify-between md:bg-transparent bg-darkBrown md:shadow-none shadow-md rounded-md`}
       >
-        <ul className="list-none flex md:items-center items-start gap-x-5 gap-y-1 flex-wrap md:flex-row flex-col text-base text-neutral-600 dark:text-neutral-500 font-medium">
+        <ul className="list-none flex md:items-center items-start gap-x-5 gap-y-1 flex-wrap md:flex-row flex-col text-lightGreen font-medium">
           {navLinks.map((link, index) => (
             <li key={index}>
               <Link
                 to={link.href}
                 onClick={handleClose}
-                className="hover:text-violet-600 ease-in-out duration-300"
+                className="hover:text-paste ease-in-out duration-300"
               >
                 {link.label}
               </Link>
@@ -71,7 +71,7 @@ const Navbar = () => {
 
         <div className="flex md:items-center items-start gap-x-5 gap-y-2 flex-wrap md:flex-row flex-col text-base font-medium text-neutral-800">
           <div>
-            <button className="inline-flex text-primary btn btn-secondary border-0 py-2 px-6 focus:outline-none hover:bg-primary hover:text-white rounded text-lg font-OpenSans">
+            <button className="inline-flex text-primary border-0 py-2 px-6 focus:outline-none text-lightGreen hover:text-paste rounded text-lg">
               <FiShoppingCart />
             </button>
           </div>
