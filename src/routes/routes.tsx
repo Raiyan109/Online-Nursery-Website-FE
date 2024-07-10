@@ -1,3 +1,4 @@
+import AddProduct from "@/components/AddProduct";
 import AllProducts from "@/pages/AllProducts";
 import Cart from "@/pages/Cart";
 import Dashboard from "@/pages/Dashboard";
@@ -17,6 +18,12 @@ const routes = createBrowserRouter([
     {
         path: '/dashboard',
         element: <Dashboard />,
+        children: [
+            {
+                path: 'addProduct',
+                element: <AddProduct />,
+            }
+        ]
     },
     {
         path: '/cart',
