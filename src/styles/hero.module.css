@@ -10,11 +10,22 @@ section {
     section {
         /* padding: 100px 50px; */
     }
+
+    .box {
+        margin-left: 20px !important;
+        margin-right: 20px !important;
+    }
 }
 
 @media (max-width:600px) {
     section {
         /* padding: 125px 30px; */
+
+    }
+
+    .box {
+        margin-left: 50px;
+        margin-right: 50px;
     }
 }
 

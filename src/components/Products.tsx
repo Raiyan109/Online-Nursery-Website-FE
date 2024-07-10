@@ -9,7 +9,7 @@ const Products = () => {
   return (
     <div className="py-32">
       <InViewAnimation>
-        <h1 className="text-6xl text-white font-bold pb-10 lg:px-28 px-0 text-center lg:text-left">Products</h1>
+        <h1 className="text-6xl text-white font-bold pb-10 lg:px-28 px-0 text-center lg:text-left">Plants</h1>
       </InViewAnimation>
       <InViewRight>
         <div className="py-10 flex justify-center items-center">

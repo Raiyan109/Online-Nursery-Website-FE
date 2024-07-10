@@ -7,6 +7,7 @@ import Products from "@/components/Products"
 
 const Home = () => {
   return (
+    // overflow-x-auto
     <div className="">
       <Navbar />
       <Hero />
