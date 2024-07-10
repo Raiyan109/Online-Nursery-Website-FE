@@ -8,6 +8,7 @@ import AnimatedHamburgerButton from "./AnimatedHamburgerButton";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [color, setColor] = useState(false)
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -23,10 +24,18 @@ const Navbar = () => {
     setOpen(false);
   };
 
-
+  const changeColor = () => {
+    if (window.scrollY >= 100) {
+      setColor(true)
+    }
+    else {
+      setColor(false)
+    }
+  }
+  window.addEventListener('scroll', changeColor)
 
   return (
-    <div className="w-full h-[8ch] flex items-center md:flex-row lg:px-28 md:px-16 sm:px-7 px-4 fixed top-0 z-50">
+    <div className={color ? 'w-full h-[8ch] flex items-center md:flex-row lg:px-28 md:px-16 sm:px-7 px-4 fixed top-0 z-50 bg-[rgba(0,0,0,0.85)] transition-all' : 'w-full h-[7ch] flex items-center md:flex-row lg:px-28 md:px-16 sm:px-7 px-4 fixed top-0 z-50'}>
       {/* Logo section */}
       <Link to={"/"} className="mr-16">
         <img src={Logo} alt="logo" className="w-28 h-auto object-contain" />
