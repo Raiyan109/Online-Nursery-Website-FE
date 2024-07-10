@@ -3,11 +3,10 @@ import { baseApi } from '../api/baseApi';
 const productApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getProduct: builder.query({
-            // query: () => ({
-            //     url: '/products',
-            //     method: 'GET'
-            // }),
             query: () => 'products',
+        }),
+        getCategories: builder.query({
+            query: () => 'products/categories',
         }),
         deleteProduct: builder.mutation({
             query: (id) => ({
@@ -18,4 +17,4 @@ const productApi = baseApi.injectEndpoints({
     }),
 });
 
-export const { useGetProductQuery, useDeleteProductMutation } = productApi;
+export const { useGetProductQuery, useDeleteProductMutation, useGetCategoriesQuery } = productApi;
