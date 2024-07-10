@@ -35,7 +35,7 @@ const Category = () => {
 
 const HorizontalScrollCarousel = () => {
   const { data, error, isLoading } = useGetCategoriesQuery(undefined)
-  console.log(data?.data);
+
   const targetRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -45,7 +45,7 @@ const HorizontalScrollCarousel = () => {
 
   return (
     // bg-neutral-900
-    <section ref={targetRef} className="relative h-[300vh] ">
+    <section ref={targetRef} className="relative h-[300vh]">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
         <motion.div style={{ x }} className="flex gap-4">
           {data?.data?.map((card) => {
