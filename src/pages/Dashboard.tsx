@@ -7,10 +7,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { useGetProductQuery } from "@/redux/features/productApi";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
+import { useDeleteProductMutation, useGetProductQuery } from "@/redux/features/productApi";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { FaLeaf } from "react-icons/fa6";
 import { AiFillFileAdd } from "react-icons/ai";
+import { IoMdArrowRoundBack } from "react-icons/io";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -21,6 +34,15 @@ import { Skeleton } from "@/components/ui/skeleton"
 const Dashboard = () => {
   const [products, setProducts] = useState([])
   const { data, error, isLoading } = useGetProductQuery(undefined)
+  const [deleteProduct] = useDeleteProductMutation()
+
+  const removeProduct = (id) => {
+    console.log(id);
+    console.log('from remove product');
+
+
+    deleteProduct(id)
+  }
 
   if (isLoading) {
     return <div>
@@ -32,8 +54,8 @@ const Dashboard = () => {
     <div className="bg-darkBrown text-slate-100 flex">
       <SideNav />
       <div className="w-full">
-        <div className="h-[35px] m-4 rounded border-2 border-dashed border-slate-600 bg-darkBrown"></div>
-        <div className="h-[400px] m-4 rounded border-2 border-dashed border-slate-600 bg-darkBrown">
+        <div className="h-[35px] m-4 rounded border-2 border-dashed border-paste bg-darkBrown"></div>
+        <div className=" m-4 rounded border-2 border-dashed border-paste bg-darkBrown">
           <Table>
             <TableCaption>A list of your recent products.</TableCaption>
             {error && <TableCaption>Error: {error.message}</TableCaption>}
@@ -49,7 +71,7 @@ const Dashboard = () => {
             {!isLoading && !error && data && data?.data?.length > 0 && (
               <TableBody>
                 {data?.data?.map((product) => (
-                  <TableRow>
+                  <TableRow key={product?._id}>
                     <TableCell className="text-center">
                       <img src={product.image} alt="" className="w-8 h-8 object-contain" />
                     </TableCell>
@@ -58,7 +80,30 @@ const Dashboard = () => {
                     <TableCell className="font-medium text-center">{product.category}</TableCell>
                     <TableCell className="font-medium flex items-center gap-3 justify-center">
                       <button className="btn-white-square text-center px-1 py-1 bg-orange hover:bg-orange/90 rounded"><MdEdit /></button>
-                      <button className="btn-white-square text-center  px-1 py-1 bg-red hover:bg-red/90 rounded"><MdDelete /></button>
+                      <button className="btn-white-square text-center  px-1 py-1 bg-red hover:bg-red/90 rounded">
+                        <AlertDialog>
+                          <AlertDialogTrigger>
+                            <MdDelete />
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className="bg-paste border-none">
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete your account
+                                and remove your data from our servers.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel className="bg-red border-none">Cancel</AlertDialogCancel>
+                              <AlertDialogAction className="bg-orange"
+                                onClick={() => removeProduct(product._id)}
+                              >Continue</AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+
+
+                      </button>
                     </TableCell>
                     {/* <TableCell>Paid</TableCell>
                 <TableCell>Credit Card</TableCell>
@@ -82,22 +127,10 @@ const SideNav = () => {
     // NOTE: In prod, you'd likely set height to h-screen and fix to the viewport
     // h-[500px]
     <nav className="h-screen w-fit bg-paste p-4 flex flex-col items-center gap-2">
-      {/* Temp logo from https://logoipsum.com/ */}
-      <svg
-        width="40"
-        height="28"
-        viewBox="0 0 40 28"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="mb-4"
-      >
-        <path
-          fillRule="evenodd"
-          clipRule="evenodd"
-          d="M9.98578 4.11462L0 14C1.99734 15.9773 4.27899 17.6437 6.76664 18.9474C7.45424 20.753 8.53203 22.4463 10 23.8995C15.5229 29.3668 24.4772 29.3668 30 23.8995C31.468 22.4463 32.5458 20.753 33.2334 18.9473C35.721 17.6437 38.0027 15.9773 40 14L30.0223 4.12266C30.0149 4.11527 30.0075 4.10788 30 4.1005C24.4772 -1.36683 15.5229 -1.36683 10 4.1005C9.99527 4.10521 9.99052 4.10991 9.98578 4.11462ZM29.0445 20.7309C26.1345 21.7031 23.0797 22.201 20 22.201C16.9203 22.201 13.8656 21.7031 10.9556 20.7309C11.2709 21.145 11.619 21.5424 12 21.9196C16.4183 26.2935 23.5817 26.2935 28 21.9196C28.381 21.5424 28.7292 21.145 29.0445 20.7309ZM12.2051 5.8824C12.9554 6.37311 13.7532 6.79302 14.588 7.13536C16.3038 7.83892 18.1428 8.20104 20 8.20104C21.8572 8.20104 23.6962 7.83892 25.412 7.13536C26.2468 6.79302 27.0446 6.3731 27.795 5.88238C23.4318 1.77253 16.5682 1.77254 12.2051 5.8824Z"
-          fill="#FFFFFF"
-        ></path>
-      </svg>
+      <Link to='/'>
+        <IoMdArrowRoundBack size={40} className="text-darkBrown mb-5 cursor-pointer hover:text-lightGreen transition-all duration-75" />
+
+      </Link>
       <NavItem selected={selected === 0} id={0} setSelected={setSelected} to='/dashboard'>
         <FaLeaf />
       </NavItem>

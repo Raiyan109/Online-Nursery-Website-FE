@@ -8,12 +8,12 @@ import Products from "@/components/Products"
 const Home = () => {
   return (
     <div className="">
-        <Navbar/>
-        <Hero/>
-        {/* <Products/> */}
-        {/* <Category/> */}
-        {/* <Gallery/> */}
-        {/* <Footer/> */}
+      <Navbar />
+      <Hero />
+      <Products />
+      {/* <Category/> */}
+      {/* <Gallery/> */}
+      <Footer />
     </div>
   )
 }
