@@ -2,19 +2,19 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 110px 100px;
+    /* padding: 110px 100px; */
 
 }
 
 @media (max-width:1000px) {
     section {
-        padding: 100px 50px;
+        /* padding: 100px 50px; */
     }
 }
 
 @media (max-width:600px) {
     section {
-        padding: 125px 30px;
+        /* padding: 125px 30px; */
     }
 }
 
