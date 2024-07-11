@@ -2,9 +2,16 @@ import { useGetProductQuery } from "@/redux/features/productApi";
 import InViewAnimation from "./InViewAnimation"
 import InViewRight from "./InViewRight";
 import Product from "./Product";
+import Loading from "./Loading";
 
 const Products = () => {
   const { data, error, isLoading } = useGetProductQuery(undefined)
+
+  if (isLoading) {
+    return <div>
+      <Loading />
+    </div>
+  }
 
   return (
     <div className="py-32" id="products">

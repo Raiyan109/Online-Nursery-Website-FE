@@ -8,13 +8,13 @@ import { addToCart } from "@/redux/features/cart/cartSlice";
 const ProductDetails = () => {
     const { id } = useParams()
     const { data, isLoading, Error } = useGetProductDetailsQuery(id);
+    const dispatch = useAppDispatch()
 
     if (isLoading) {
         return <div>
             <Loading />
         </div>
     }
-    const dispatch = useAppDispatch()
 
     const handleAddToCart = (item) => {
         dispatch(addToCart(item))

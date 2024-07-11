@@ -2,6 +2,7 @@ import Category from "@/components/Category"
 import Footer from "@/components/Footer"
 import Gallery from "@/components/Gallery"
 import Hero from "@/components/Hero"
+import Members from "@/components/Members"
 import Navbar from "@/components/Navbar"
 import Products from "@/components/Products"
 
@@ -13,6 +14,7 @@ const Home = () => {
       <Hero />
       {/* <Category /> */}
       <Products />
+      <Members />
       {/* <Gallery/> */}
       <Footer />
     </div>

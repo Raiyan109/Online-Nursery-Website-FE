@@ -3,9 +3,16 @@ import InViewRight from "@/components/InViewRight"
 import { useGetProductQuery } from "@/redux/features/productApi"
 import AllProduct from "./AllProduct"
 import Navbar from "@/components/Navbar"
+import Loading from "@/components/Loading"
 
 const AllProducts = () => {
   const { data, error, isLoading } = useGetProductQuery(undefined)
+
+  if (isLoading) {
+    return <div>
+      <Loading />
+    </div>
+  }
 
   return (
     <div className="py-32">
