@@ -23,9 +23,14 @@ import { useDeleteProductMutation, useGetProductQuery } from "@/redux/features/p
 import { Skeleton } from "./ui/skeleton"
 import { MdDelete, MdEdit } from "react-icons/md"
 import Loading from "./Loading"
+import Pagination from "./Pagination"
 
 const ProductTable = () => {
-    const [products, setProducts] = useState([])
+
+    // States for pagination
+    const [currentPage, setCurrentPage] = useState(1)
+    const [postPerPage, setPostPerPage] = useState(5)
+
     const { data, error, isLoading } = useGetProductQuery(undefined)
     const [deleteProduct] = useDeleteProductMutation()
 
@@ -42,9 +47,17 @@ const ProductTable = () => {
             <Loading />
         </div>
     }
+
+
+    // Logic for pagination
+    const lastPostIndex = currentPage * postPerPage
+    const firstPostIndex = lastPostIndex - postPerPage
+    const currentResults = data?.data?.slice(firstPostIndex, lastPostIndex)
     return (
         <div> <Table>
-            <TableCaption>A list of your recent products.</TableCaption>
+            <TableCaption>
+                <Pagination totalPosts={data?.data?.length} postsPerPage={postPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+            </TableCaption>
             {error && <TableCaption>Error: {error.message}</TableCaption>}
             <TableHeader>
                 <TableRow>
@@ -57,7 +70,7 @@ const ProductTable = () => {
             </TableHeader>
             {!isLoading && !error && data && data?.data?.length > 0 && (
                 <TableBody>
-                    {data?.data?.map((product) => (
+                    {currentResults?.map((product) => (
                         <TableRow key={product?._id}>
                             <TableCell className="text-center">
                                 <img src={product.image} alt="" className="w-8 h-8 object-contain" />
@@ -98,6 +111,7 @@ const ProductTable = () => {
                 </TableBody>
             )}
         </Table>
+
         </div>
     )
 }

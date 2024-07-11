@@ -14,8 +14,8 @@ const Dashboard = () => {
       <SideNav />
       <div className="w-full">
         <div className="h-[35px] m-4 rounded border-2 border-dashed border-paste bg-darkBrown"></div>
-        <div className=" m-4 rounded border-2 border-dashed border-paste bg-darkBrown">
-
+        {/* border-2 border-dashed border-paste */}
+        <div className=" m-4 rounded  bg-darkBrown">
           <Outlet />
         </div>
       </div>

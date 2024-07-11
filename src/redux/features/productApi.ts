@@ -9,16 +9,19 @@ const productApi = baseApi.enhanceEndpoints({ addTagTypes: ['product'] }).inject
         getProductDetails: builder.query({
             query: (id) => ({
                 url: `/products/${id}`
-            })
+            }),
+            providesTags: ['product']
         }),
         getCategories: builder.query({
             query: () => 'products/categories',
+            providesTags: ['product']
         }),
         deleteProduct: builder.mutation({
             query: (id) => ({
                 url: `/products/${id}`,
                 method: 'PUT'
-            })
+            }),
+            invalidatesTags: ['product']
         }),
         addProduct: builder.mutation({
             query: (products) => ({
