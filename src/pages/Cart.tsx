@@ -4,11 +4,17 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { IoBagHandleOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { FaPlus, FaMinus } from "react-icons/fa6";
-import { addToCart, decreaseCart, removeFromCart } from "@/redux/features/cart/cartSlice";
+import { addToCart, decreaseCart, getTotal, removeFromCart } from "@/redux/features/cart/cartSlice";
+import { useEffect } from "react";
 
 const Cart = () => {
   const cart = useAppSelector((state) => state.cart)
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(getTotal())
+  }, [cart, dispatch])
+
 
   const handleRemoveFromCart = (cartItem) => {
     dispatch(removeFromCart(cartItem))
@@ -132,8 +138,8 @@ const Cart = () => {
                       Order Summary</h2>
                     <div className="mt-8">
                       <div className="flex items-center justify-between pb-6">
-                        <p className="font-normal text-lg leading-8 text-black">3 Items</p>
-                        <p className="font-medium text-lg leading-8 text-black">$480.00</p>
+                        <p className="font-normal text-lg leading-8 text-black">{cart.cartTotalQuantity} Items</p>
+                        <p className="font-medium text-lg leading-8 text-black">${cart.cartTotalAmount}</p>
                       </div>
                       <form>
                         <label className="flex  items-center mb-1.5 text-gray-600 text-sm font-medium">Shipping
@@ -231,8 +237,8 @@ const Cart = () => {
                             className="w-full text-center btn-black-square py-3 px-6 font-semibold text-lg transition-all duration-500 rounded-2xl mb-4">Apply</button>
                         </div>
                         <div className="flex items-center justify-between py-8">
-                          <p className="font-medium text-2xl leading-8 text-black">3 Items</p>
-                          <p className="font-bold text-2xl leading-8 text-black">$485.00</p>
+                          <p className="font-medium text-2xl leading-8 text-black">{cart.cartTotalQuantity} Items</p>
+                          <p className="font-bold text-2xl leading-8 text-black">${cart.cartTotalAmount}</p>
                         </div>
                         <button
                           className="w-full text-center btn-green-square py-3 px-6 font-semibold text-lg transition-all duration-500 rounded-2xl">Checkout</button>

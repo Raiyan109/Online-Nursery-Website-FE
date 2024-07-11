@@ -41,8 +41,25 @@ const cartSlice = createSlice({
                 toast.error(`${action.payload.title} removed from cart`)
             }
         },
+        getTotal: (state, action) => {
+            let { total, quantity } = state.cartItems.reduce((cartTotal, cartItem) => {
+                const { price, cartQuantity } = cartItem
+                const itemTotal = price * cartQuantity
+
+                cartTotal.total += itemTotal
+                cartTotal.quantity += cartQuantity
+
+                return cartTotal
+            }, {
+                total: 0,
+                quantity: 0
+            })
+
+            state.cartTotalQuantity = quantity
+            state.cartTotalAmount = total
+        }
     }
 })
 
-export const { addToCart, removeFromCart, decreaseCart } = cartSlice.actions
+export const { addToCart, removeFromCart, decreaseCart, getTotal } = cartSlice.actions
 export default cartSlice.reducer
