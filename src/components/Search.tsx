@@ -22,7 +22,6 @@ const Search = () => {
 
     //Applying our search filter function to our array of countries recieved from the API
     const filtered = searchFilter(data?.data)
-    console.log(filtered);
 
 
     //Handling the input on our search bar
