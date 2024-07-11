@@ -1,5 +1,6 @@
 import AddProduct from "@/components/AddProduct";
 import ProductDetails from "@/components/ProductDetails";
+import ProductTable from "@/components/ProductTable";
 import AllProducts from "@/pages/AllProducts";
 import Cart from "@/pages/Cart";
 import Dashboard from "@/pages/Dashboard";
@@ -24,6 +25,10 @@ const routes = createBrowserRouter([
         path: '/dashboard',
         element: <Dashboard />,
         children: [
+            {
+                path: '/dashboard',
+                element: <ProductTable />,
+            },
             {
                 path: 'addProduct',
                 element: <AddProduct />,
