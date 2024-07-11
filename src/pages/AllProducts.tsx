@@ -2,12 +2,14 @@ import InViewAnimation from "@/components/InViewAnimation"
 import InViewRight from "@/components/InViewRight"
 import { useGetProductQuery } from "@/redux/features/productApi"
 import AllProduct from "./AllProduct"
+import Navbar from "@/components/Navbar"
 
 const AllProducts = () => {
   const { data, error, isLoading } = useGetProductQuery(undefined)
 
   return (
     <div className="py-32">
+      <Navbar />
       <InViewAnimation>
         <h1 className="text-6xl text-white font-bold pb-10 lg:px-28 px-0 text-center lg:text-left">All Plants</h1>
       </InViewAnimation>

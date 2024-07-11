@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { addToCart, decreaseCart, getTotal, removeFromCart } from "@/redux/features/cart/cartSlice";
 import { useEffect } from "react";
+import Navbar from "@/components/Navbar";
 
 const Cart = () => {
   const cart = useAppSelector((state) => state.cart)
@@ -30,6 +31,7 @@ const Cart = () => {
 
   return (
     <>
+      <Navbar />
       {cart.cartItems.length === 0 ? (
         <InViewAnimation>
           <div className="py-32 flex flex-col items-center justify-center gap-5">
@@ -37,7 +39,7 @@ const Cart = () => {
             <h1 className="text-6xl text-white font-bold lg:px-28 px-0 text-center lg:text-left">Your cart is empty</h1>
             <h3 className="text-md text-white/60 lg:px-28 px-0 text-center lg:text-left">Please add more plants inside</h3>
             <Link to='/allProducts'>
-              <button className="btn-green-rounded text-xl py-3 px-5 rounded-full">Catalog</button>
+              <button className="btn-green-rounded text-xl py-3 px-5 rounded-full">Start Shopping</button>
             </Link>
           </div>
         </InViewAnimation>

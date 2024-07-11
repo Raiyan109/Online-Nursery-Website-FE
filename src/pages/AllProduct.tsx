@@ -6,6 +6,7 @@ import {
   useSpring,
 } from "framer-motion";
 import { FiMousePointer } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const AllProduct = ({ item }) => {
 
@@ -21,7 +22,11 @@ const ROTATION_RANGE = 32.5;
 const HALF_ROTATION_RANGE = 32.5 / 2;
 
 const TiltCard = ({ item }) => {
-  console.log(item);
+  const navigate = useNavigate()
+
+  const goToProductDetailsPage = () => {
+    navigate(`/${item?._id}`)
+  }
 
   const ref = useRef(null);
 
@@ -61,11 +66,12 @@ const TiltCard = ({ item }) => {
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onClick={goToProductDetailsPage}
       style={{
         transformStyle: "preserve-3d",
         transform,
       }}
-      className="relative h-96 w-72 rounded-xl bg-paste"
+      className="relative h-96 w-72 rounded-xl bg-paste cursor-pointer"
     >
       <div
         style={{

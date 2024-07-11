@@ -7,6 +7,7 @@ import {
 } from "framer-motion";
 import { useAppDispatch } from "@/redux/hooks";
 import { addToCart } from "@/redux/features/cart/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const Product = ({ item }) => {
   return (
@@ -24,6 +25,12 @@ const TiltCard = ({ item }) => {
 
   const handleAddToCart = (item) => {
     dispatch(addToCart(item))
+  }
+
+  const navigate = useNavigate()
+
+  const goToProductDetailsPage = () => {
+    navigate(`/${item?._id}`)
   }
 
   const ref = useRef(null);
@@ -64,11 +71,12 @@ const TiltCard = ({ item }) => {
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onClick={goToProductDetailsPage}
       style={{
         transformStyle: "preserve-3d",
         transform,
       }}
-      className="relative h-96 w-72 rounded-xl bg-paste"
+      className="relative h-96 w-72 rounded-xl bg-paste cursor-pointer"
     >
       <div
         style={{
