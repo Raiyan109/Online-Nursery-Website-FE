@@ -26,10 +26,9 @@ import Loading from "./Loading"
 import Pagination from "./Pagination"
 
 const ProductTable = () => {
-
     // States for pagination
     const [currentPage, setCurrentPage] = useState(1)
-    const [postPerPage, setPostPerPage] = useState(5)
+    const [postPerPage, setPostPerPage] = useState(10)
 
     const { data, error, isLoading } = useGetProductQuery(undefined)
     const [deleteProduct] = useDeleteProductMutation()
@@ -37,8 +36,6 @@ const ProductTable = () => {
     const removeProduct = (id) => {
         console.log(id);
         console.log('from remove product');
-
-
         deleteProduct(id)
     }
 
@@ -48,11 +45,11 @@ const ProductTable = () => {
         </div>
     }
 
-
     // Logic for pagination
     const lastPostIndex = currentPage * postPerPage
     const firstPostIndex = lastPostIndex - postPerPage
     const currentResults = data?.data?.slice(firstPostIndex, lastPostIndex)
+
     return (
         <div> <Table>
             <TableCaption>
