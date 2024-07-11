@@ -22,9 +22,27 @@ const cartSlice = createSlice({
                 state.cartItems.push(tempProduct)
                 toast.success(`${action.payload.title} added to cart`)
             }
-        }
+        },
+        removeFromCart: (state, action) => {
+            const nextCartItems = state.cartItems.filter((cartItem) => cartItem._id !== action.payload._id)
+            state.cartItems = nextCartItems
+        },
+        decreaseCart: (state, action) => {
+            const itemIndex = state.cartItems.findIndex((item) => item._id === action.payload._id)
+
+            if (state.cartItems[itemIndex].cartQuantity > 1) {
+                state.cartItems[itemIndex].cartQuantity -= 1;
+
+                toast.info(`Decreased ${action.payload.title} quantity`)
+            } else if (state.cartItems[itemIndex].cartQuantity === 1) {
+                const nextCartItems = state.cartItems.filter((cartItem) => cartItem.id !== action.payload.id)
+                state.cartItems = nextCartItems
+
+                toast.error(`${action.payload.title} removed from cart`)
+            }
+        },
     }
 })
 
-export const { addToCart } = cartSlice.actions
+export const { addToCart, removeFromCart, decreaseCart } = cartSlice.actions
 export default cartSlice.reducer

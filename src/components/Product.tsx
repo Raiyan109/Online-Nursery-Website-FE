@@ -9,8 +9,6 @@ import { useAppDispatch } from "@/redux/hooks";
 import { addToCart } from "@/redux/features/cart/cartSlice";
 
 const Product = ({ item }) => {
-
-
   return (
     <div>
       <TiltCard item={item} />
@@ -25,8 +23,6 @@ const TiltCard = ({ item }) => {
   const dispatch = useAppDispatch()
 
   const handleAddToCart = (item) => {
-    console.log(item);
-
     dispatch(addToCart(item))
   }
 

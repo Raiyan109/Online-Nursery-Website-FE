@@ -1,11 +1,27 @@
 import InViewAnimation from "@/components/InViewAnimation"
 import InViewRight from "@/components/InViewRight"
-import { useAppSelector } from "@/redux/hooks"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { IoBagHandleOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { FaPlus, FaMinus } from "react-icons/fa6";
+import { addToCart, decreaseCart, removeFromCart } from "@/redux/features/cart/cartSlice";
 
 const Cart = () => {
   const cart = useAppSelector((state) => state.cart)
+  const dispatch = useAppDispatch()
+
+  const handleRemoveFromCart = (cartItem) => {
+    dispatch(removeFromCart(cartItem))
+  }
+
+  const handleDecreaseCart = (cartItem) => {
+    dispatch(decreaseCart(cartItem))
+  }
+
+  const handleIncreaseCart = (cartItem) => {
+    dispatch(addToCart(cartItem))
+  }
+
   return (
     <>
       {cart.cartItems.length === 0 ? (
@@ -35,6 +51,7 @@ const Cart = () => {
                       <h2 className="font-manrope font-bold text-3xl leading-10 text-black">Shopping Cart</h2>
                       <h2 className="font-manrope font-bold text-xl leading-8 text-gray-600">3 Items</h2>
                     </div> */}
+                    {/* Cart items header */}
                     <div className="grid grid-cols-12 mt-8 max-md:hidden pb-6 border-b border-paste">
                       <div className="col-span-12 md:col-span-7">
                         <p className="font-normal text-lg leading-8 text-paste">Product Details</p>
@@ -50,59 +67,49 @@ const Cart = () => {
                         </div>
                       </div>
                     </div>
-                    <div
-                      className="flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6  border-b border-paste group">
-                      <div className="w-full md:max-w-[126px]">
-                        <img src="https://pagedone.io/asset/uploads/1701162850.png" alt="perfume bottle image"
-                          className="mx-auto" />
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-4 w-full">
-                        <div className="md:col-span-2">
-                          <div className="flex flex-col max-[500px]:items-center gap-3">
-                            <h6 className="font-semibold text-base leading-7 text-white">Rose Petals Divine</h6>
-                            <h6 className="font-normal text-base leading-7 text-lightGreen">Perfumes</h6>
-                            <h6 className="font-medium text-base leading-7 text-lightGreen transition-all duration-300 group-hover:text-lightGreen/80">$120.00</h6>
+
+                    {/* Cart Items */}
+                    {cart.cartItems?.map((cartItem) => (
+                      <div
+                        className="flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6  border-b border-paste group">
+                        <div className="w-full md:max-w-[126px]">
+                          <img src={cartItem?.image} alt="perfume bottle image"
+                            className="mx-auto" />
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-4 w-full">
+                          <div className="md:col-span-2">
+                            <div className="flex flex-col max-[500px]:items-center gap-3">
+                              <h6 className="font-semibold text-base leading-7 text-white">{cartItem?.title}</h6>
+                              <h6 className="font-normal text-sm leading-7 text-white/80">{cartItem?.category}</h6>
+                              <h6 className="font-medium text-base leading-7 text-lightGreen transition-all duration-300 group-hover:text-lightGreen/80">${cartItem?.price}</h6>
+                              <button className="btn-green-rounded bg-red hover:bg-red/80 w-20 text-xs" onClick={() => handleRemoveFromCart(cartItem)}>Remove</button>
+                            </div>
+                          </div>
+                          <div className="flex items-center max-[500px]:justify-center h-full max-md:mt-3">
+                            <div className="flex items-center h-full">
+                              <button
+                                className="group rounded-l-xl px-5 py-[18px] border border-paste flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-paste hover:border-paste hover:shadow-paste focus-within:outline-paste" onClick={() => handleDecreaseCart(cartItem)}>
+
+                                <FaMinus className="stroke-white transition-all duration-500 group-hover:stroke-black" />
+                              </button>
+                              <div className="border-y border-paste outline-none text-white font-semibold text-lg w-full max-w-[73px] min-w-[60px] placeholder:text-white py-[15px]  text-center bg-transparent">
+                                {cartItem.cartQuantity}
+                              </div>
+                              {/* <input type="text"
+                                className="border-y border-paste outline-none text-gray-900 font-semibold text-lg w-full max-w-[73px] min-w-[60px] placeholder:text-white py-[15px]  text-center bg-transparent"
+                                placeholder="1" /> */}
+                              <button
+                                className="group rounded-r-xl px-5 py-[18px] border border-paste flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-paste hover:border-paste hover:shadow-paste focus-within:outline-paste" onClick={() => handleIncreaseCart(cartItem)}>
+                                <FaPlus className="stroke-white transition-all duration-500 group-hover:stroke-black" />
+                              </button>
+                            </div>
+                          </div>
+                          <div className="flex items-center max-[500px]:justify-center md:justify-end max-md:mt-3 h-full">
+                            <p className="font-bold text-lg leading-8 text-lightGreen text-center transition-all duration-300 group-hover:text-lightGreen/80">${cartItem.price * cartItem.cartQuantity}</p>
                           </div>
                         </div>
-                        <div className="flex items-center max-[500px]:justify-center h-full max-md:mt-3">
-                          <div className="flex items-center h-full">
-                            <button
-                              className="group rounded-l-xl px-5 py-[18px] border border-paste flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-paste hover:border-paste hover:shadow-paste focus-within:outline-paste">
-                              <svg className="stroke-white transition-all duration-500 group-hover:stroke-black"
-                                xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                viewBox="0 0 22 22" fill="none">
-                                <path d="M16.5 11H5.5" stroke="" stroke-width="1.6"
-                                  stroke-linecap="round" />
-                                <path d="M16.5 11H5.5" stroke="" stroke-opacity="0.2" stroke-width="1.6"
-                                  stroke-linecap="round" />
-                                <path d="M16.5 11H5.5" stroke="" stroke-opacity="0.2" stroke-width="1.6"
-                                  stroke-linecap="round" />
-                              </svg>
-                            </button>
-                            <input type="text"
-                              className="border-y border-paste outline-none text-gray-900 font-semibold text-lg w-full max-w-[73px] min-w-[60px] placeholder:text-white py-[15px]  text-center bg-transparent"
-                              placeholder="1" />
-                            <button
-                              className="group rounded-r-xl px-5 py-[18px] border border-paste flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-paste hover:border-paste hover:shadow-paste focus-within:outline-paste">
-                              <svg className="stroke-white transition-all duration-500 hover:stroke-black"
-                                // group-hover:stroke-black
-                                xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                viewBox="0 0 22 22" fill="none">
-                                <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-width="1.6"
-                                  stroke-linecap="round" />
-                                <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-opacity="0.2"
-                                  stroke-width="1.6" stroke-linecap="round" />
-                                <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-opacity="0.2"
-                                  stroke-width="1.6" stroke-linecap="round" />
-                              </svg>
-                            </button>
-                          </div>
-                        </div>
-                        <div className="flex items-center max-[500px]:justify-center md:justify-end max-md:mt-3 h-full">
-                          <p className="font-bold text-lg leading-8 text-lightGreen text-center transition-all duration-300 group-hover:text-lightGreen/80">$120.00</p>
-                        </div>
                       </div>
-                    </div>
+                    ))}
 
 
 
