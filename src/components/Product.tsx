@@ -1,11 +1,12 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import {
   motion,
   useMotionTemplate,
   useMotionValue,
   useSpring,
 } from "framer-motion";
-import { FiMousePointer } from "react-icons/fi";
+import { useAppDispatch } from "@/redux/hooks";
+import { addToCart } from "@/redux/features/cart/cartSlice";
 
 const Product = ({ item }) => {
 
@@ -21,7 +22,13 @@ const ROTATION_RANGE = 32.5;
 const HALF_ROTATION_RANGE = 32.5 / 2;
 
 const TiltCard = ({ item }) => {
-  console.log(item);
+  const dispatch = useAppDispatch()
+
+  const handleAddToCart = (item) => {
+    console.log(item);
+
+    dispatch(addToCart(item))
+  }
 
   const ref = useRef(null);
 
@@ -114,7 +121,9 @@ const TiltCard = ({ item }) => {
         <button style={{
           transform: "translateZ(15px)",
         }}
-          className="mx-auto text-sm absolute bottom-6 right-5 text-black font-bold btn-green-square">
+          className="mx-auto text-sm absolute bottom-6 right-5 text-black font-bold btn-green-square"
+          onClick={() => handleAddToCart(item)}
+        >
           Add To Cart
         </button>
       </div>

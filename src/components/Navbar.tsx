@@ -80,9 +80,11 @@ const Navbar = () => {
 
         <div className="flex md:items-center items-start gap-x-5 gap-y-2 flex-wrap md:flex-row flex-col text-base font-medium text-neutral-800">
           <div>
-            <button className="inline-flex text-primary border-0 py-2 px-6 focus:outline-none text-lightGreen hover:text-paste rounded text-lg">
-              <FiShoppingCart />
-            </button>
+            <Link to='/cart'>
+              <button className="inline-flex text-primary border-0 py-2 px-6 focus:outline-none text-lightGreen hover:text-paste rounded text-lg">
+                <FiShoppingCart />
+              </button>
+            </Link>
           </div>
         </div>
       </div>

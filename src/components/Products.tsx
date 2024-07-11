@@ -7,7 +7,7 @@ const Products = () => {
   const { data, error, isLoading } = useGetProductQuery(undefined)
 
   return (
-    <div className="py-32">
+    <div className="py-32" id="products">
       <InViewAnimation>
         <h1 className="text-6xl text-white font-bold pb-10 lg:px-28 px-0 text-center lg:text-left">Plants</h1>
       </InViewAnimation>

@@ -1,5 +1,6 @@
 import bg from '@/assets/hero-video.mp4'
 import styles from '@/styles/hero.module.css'
+import { Link } from 'react-router-dom'
 const Hero = () => {
   return (
     <section className={styles.box}>
@@ -11,8 +12,12 @@ const Hero = () => {
         <h1 className='text-6xl text-white font-bold mb-10'>Have Arrived!</h1>
         <h3 className='text-xl text-white max-w-md mb-10'>Introducing our first collection of outdoor plants for your porch, patio, and yard</h3>
         <div className='flex items-center gap-10'>
-          <button className='btn-green-square'>Outdoor Collections</button>
-          <button className='btn-white-square'>New Arrivals</button>
+          <Link to='/allProducts'>
+            <button className='btn-green-square'>Outdoor Collections</button>
+          </Link>
+          <a href="#products">
+            <button className='btn-white-square'>New Arrivals</button>
+          </a>
         </div>
       </div>
     </section>
