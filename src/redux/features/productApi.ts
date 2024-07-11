@@ -19,7 +19,7 @@ const productApi = baseApi.enhanceEndpoints({ addTagTypes: ['product'] }).inject
         deleteProduct: builder.mutation({
             query: (id) => ({
                 url: `/products/${id}`,
-                method: 'PUT'
+                method: 'DELETE'
             }),
             invalidatesTags: ['product']
         }),

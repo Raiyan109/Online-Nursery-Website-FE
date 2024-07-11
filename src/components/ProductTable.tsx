@@ -24,6 +24,7 @@ import { Skeleton } from "./ui/skeleton"
 import { MdDelete, MdEdit } from "react-icons/md"
 import Loading from "./Loading"
 import Pagination from "./Pagination"
+import { toast } from "sonner"
 
 const ProductTable = () => {
     // States for pagination
@@ -34,9 +35,10 @@ const ProductTable = () => {
     const [deleteProduct] = useDeleteProductMutation()
 
     const removeProduct = (id) => {
-        console.log(id);
         console.log('from remove product');
+        console.log(id);
         deleteProduct(id)
+        toast.success('product deleted')
     }
 
     if (isLoading) {
@@ -53,7 +55,7 @@ const ProductTable = () => {
     return (
         <div> <Table>
             <TableCaption>
-                <Pagination totalPosts={data?.data?.length} postsPerPage={postPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+                {data?.data.length > 10 && <Pagination totalPosts={data?.data?.length} postsPerPage={postPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage} />}
             </TableCaption>
             {error && <TableCaption>Error: {error.message}</TableCaption>}
             <TableHeader>
@@ -98,8 +100,6 @@ const ProductTable = () => {
                                             </AlertDialogFooter>
                                         </AlertDialogContent>
                                     </AlertDialog>
-
-
                                 </button>
                             </TableCell>
 
