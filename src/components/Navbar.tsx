@@ -6,6 +6,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import Logo from '@/assets/logo.png'
 import AnimatedHamburgerButton from "./AnimatedHamburgerButton";
 import { useAppSelector } from "@/redux/hooks";
+import Search from "./Search";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -81,6 +82,7 @@ const Navbar = () => {
         </ul>
 
         <div className="flex md:items-center items-start gap-x-5 gap-y-2 flex-wrap md:flex-row flex-col text-base font-medium text-neutral-800">
+          <Search />
           <div>
             <Link to='/cart'>
               <button className="inline-flex text-primary border-0 py-2 px-6 focus:outline-none text-lightGreen hover:text-paste rounded text-lg relative">

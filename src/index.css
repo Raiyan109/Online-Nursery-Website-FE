@@ -27,7 +27,7 @@ body {
 
 @layer components {
   .btn-green-square {
-    @apply bg-lightGreen hover:bg-lightGreen/90 text-black font-bold text-sm lg:text-xl py-2 px-4 lg:py-3 lg:px-5;
+    @apply bg-gradient-to-r from-lime-400 to-lime-600 hover:bg-lightGreen/90 text-black font-bold text-sm lg:text-xl py-2 px-4 lg:py-3 lg:px-5;
   }
 
   .btn-white-square {
@@ -35,7 +35,7 @@ body {
   }
 
   .btn-green-rounded {
-    @apply bg-lightGreen hover:bg-paste text-black font-bold text-sm lg:text-xl py-2 px-4 lg:py-3 lg:px-5 rounded-2xl;
+    @apply bg-gradient-to-r from-lime-400 to-lime-600 hover:bg-paste text-black font-bold text-sm lg:text-xl py-2 px-4 lg:py-3 lg:px-5 rounded-2xl;
   }
 
   .btn-black-square {
