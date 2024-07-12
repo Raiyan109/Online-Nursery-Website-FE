@@ -1,10 +1,14 @@
 import '../styles/pagination.css'
 
-const Pagination = ({ totalPosts,
-    postsPerPage,
-    setCurrentPage,
-    currentPage, }) => {
-    let pages = []
+interface PaginationProps {
+    totalPosts: number;
+    postsPerPage: number;
+    setCurrentPage: (page: number) => void;
+    currentPage: number;
+}
+
+const Pagination: React.FC<PaginationProps> = ({ totalPosts, postsPerPage, setCurrentPage, currentPage }) => {
+    const pages = []
 
     for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
         pages.push(i)

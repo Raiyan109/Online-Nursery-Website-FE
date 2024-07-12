@@ -5,9 +5,20 @@ import Navbar from "./Navbar";
 import { useAppDispatch } from "@/redux/hooks";
 import { addToCart } from "@/redux/features/cart/cartSlice";
 
+interface Product {
+    _id: string;
+    title: string;
+    price: number;
+    image: string;
+    rating: number;
+    availableInStock: number;
+    description: string;
+    cartQuantity: number;
+}
+
 const ProductDetails = () => {
-    const { id } = useParams()
-    const { data, isLoading, Error } = useGetProductDetailsQuery(id);
+    const { id } = useParams<{ id: string }>();
+    const { data, isLoading } = useGetProductDetailsQuery(id);
     const dispatch = useAppDispatch()
 
     if (isLoading) {
@@ -16,7 +27,7 @@ const ProductDetails = () => {
         </div>
     }
 
-    const handleAddToCart = (item) => {
+    const handleAddToCart = (item: Product) => {
         dispatch(addToCart(item))
     }
 

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { LiaTimesSolid } from "react-icons/lia";
-import { FaBars } from "react-icons/fa6";
+
 import { useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import Logo from '@/assets/logo.png'

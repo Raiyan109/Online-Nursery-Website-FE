@@ -1,15 +1,31 @@
-import React, { useRef } from "react";
+import { MouseEvent, useRef } from "react";
 import {
   motion,
   useMotionTemplate,
   useMotionValue,
   useSpring,
 } from "framer-motion";
-import { FiMousePointer } from "react-icons/fi";
+
 import { useNavigate } from "react-router-dom";
 import ProductRating from "@/components/ProductRating";
 
-const AllProduct = ({ item }) => {
+interface Item {
+  _id: string;
+  title: string;
+  category: string;
+  rating: string;
+  price: string;
+  image: string;
+  availableInStock: string;
+  description: string;
+
+}
+
+interface AllProductProps {
+  item: Item;
+}
+
+const AllProduct = ({ item }: AllProductProps) => {
 
 
   return (
@@ -22,7 +38,11 @@ const AllProduct = ({ item }) => {
 const ROTATION_RANGE = 32.5;
 const HALF_ROTATION_RANGE = 32.5 / 2;
 
-const TiltCard = ({ item }) => {
+interface TiltCardProps {
+  item: Item;
+}
+
+const TiltCard = ({ item }: TiltCardProps) => {
   const navigate = useNavigate()
 
   const goToProductDetailsPage = () => {
@@ -39,7 +59,7 @@ const TiltCard = ({ item }) => {
 
   const transform = useMotionTemplate`rotateX(${xSpring}deg) rotateY(${ySpring}deg)`;
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: MouseEvent) => {
     if (!ref.current) return [0, 0];
 
     const rect = ref.current.getBoundingClientRect();

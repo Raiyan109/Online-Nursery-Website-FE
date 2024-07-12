@@ -10,7 +10,7 @@ const AddProduct = () => {
     const [image, setImage] = useState('')
     const [availableInStock, setAvailableInStock] = useState('')
     const [description, setDescription] = useState('')
-    const [addProduct, { data, error, isLoading }] = useAddProductMutation()
+    const [addProduct] = useAddProductMutation()
 
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -81,7 +81,7 @@ const AddProduct = () => {
                             </div>
                             <div className="col-span-full">
                                 <label className="text-sm font-medium text-paste block mb-2">Product Details</label>
-                                <textarea id="product-details" rows="6"
+                                <textarea id="product-details" rows={6}
                                     onChange={(e) => setDescription(e.target.value)}
                                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4" placeholder="Details"></textarea>
                             </div>

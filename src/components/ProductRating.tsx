@@ -1,11 +1,15 @@
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
-import { useState } from 'react';
 
-const ProductRating = ({ item }) => {
-    const [rating, setRating] = useState(item?.rating || 0);
-    const [rateColor, setRateColor] = useState(0);
 
-    const getStars = (rating) => {
+interface Item {
+    rating?: number;
+}
+
+const ProductRating = ({ item }: { item: Item }) => {
+    const rating = item?.rating || 0;
+
+
+    const getStars = (rating: number) => {
         const fullStars = Math.floor(rating);
         const halfStar = rating % 1 !== 0;
         const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);

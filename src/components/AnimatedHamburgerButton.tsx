@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { MotionConfig, motion } from "framer-motion";
 
-export const Example = ({ handleClick }) => {
+interface ExampleProps {
+  handleClick: () => void; // Define the type for the handleClick prop
+}
+
+export const Example: React.FC<ExampleProps> = ({ handleClick }) => {
   return (
     <div className="grid h-screen place-content-center bg-gradient-to-br from-violet-500 to-indigo-500" onClick={handleClick}>
       <AnimatedHamburgerButton handleClick={handleClick} />
@@ -9,7 +13,8 @@ export const Example = ({ handleClick }) => {
   );
 };
 
-const AnimatedHamburgerButton = ({ handleClick }) => {
+
+const AnimatedHamburgerButton: React.FC<ExampleProps> = ({ handleClick }) => {
   const [active, setActive] = useState(false);
 
   const onButtonClick = () => {

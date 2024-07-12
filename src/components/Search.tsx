@@ -1,33 +1,42 @@
 import { useGetProductQuery } from "@/redux/features/productApi";
-import { FormEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import Loading from "./Loading";
 import { Link } from "react-router-dom";
 
+// type for the product item
+interface Product {
+    _id: string;
+    title: string;
+    price: number;
+    image: string;
+}
+
+// type for the API response
+interface ApiResponse {
+    data: Product[];
+}
+
 const Search = () => {
-    const [query, setQuery] = useState('');
-    const { data, error, isLoading } = useGetProductQuery(undefined)
+    const [query, setQuery] = useState<string>('');
+    const { data } = useGetProductQuery<ApiResponse>(undefined);
 
-    if (isLoading) {
-        return <div>
-            <Loading />
-        </div>
-    }
+
     //Our search filter function
-    const searchFilter = (array) => {
+    const searchFilter = (array: Product[]) => {
         return array.filter(
-            (el) => el.title.toLowerCase().includes(query)
-        )
-    }
+            (el: Product) => el.title.toLowerCase().includes(query.toLowerCase())
+        );
+    };
 
-    //Applying our search filter function to our array of countries recieved from the API
-    const filtered = searchFilter(data?.data)
+
+    const filtered = searchFilter(data?.data || []);
 
 
     //Handling the input on our search bar
-    const handleChange = (e: FormEvent) => {
-        setQuery(e.target.value)
-    }
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setQuery(e.target.value);
+    };
     return (
         <div>
             <div className="relative">
@@ -43,9 +52,9 @@ const Search = () => {
                     query &&
                     <div className="flex flex-col divide-y divide-gray-200">
                         {
-                            query && filtered.map((item) => (
+                            query && filtered.map((item: Product) => (
 
-                                <div className="flex items-center py-4 px-6">
+                                <div className="flex items-center py-4 px-6" key={item._id}>
                                     <img className="w-16 h-16 object-cover rounded" src={item.image} alt="Product Image" />
                                     <div className="ml-3">
                                         <h3 className="text-gray-900 font-semibold">{item.title}</h3>

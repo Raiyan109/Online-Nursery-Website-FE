@@ -1,27 +1,46 @@
 import { Button } from "@/components/ui/button"
 import {
     Drawer,
-    DrawerClose,
+
     DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
+
+
     DrawerHeader,
-    DrawerTitle,
+
     DrawerTrigger,
 } from "@/components/ui/drawer"
-import { Minus, Plus } from "lucide-react"
+
 import { Label } from "./ui/label";
 import { Slider } from "@/components/ui/slider"
 
-const FilterSearch = ({ searchText, handleChange, setSearchText, minPrice, maxPrice, handlePriceChange, setMinPrice, setMaxPrice, }) => {
+interface FilterSearchProps {
+    searchText: string;
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    setSearchText: React.Dispatch<React.SetStateAction<string>>;
+    minPrice: number;
+    maxPrice: number;
+    handlePriceChange: (min: number, max: number) => void;
+    setMinPrice: React.Dispatch<React.SetStateAction<number>>;
+    setMaxPrice: React.Dispatch<React.SetStateAction<number>>;
+}
 
-    const handleResetFilters = () => {
-        // Reset all filter states to their initial values
-        // setSelectedCategory(null);
-        // setMinPrice(0);
-        // setMaxPrice(1000);
-        setSearchText('');
-    };
+const FilterSearch: React.FC<FilterSearchProps> = ({
+    searchText,
+    handleChange,
+
+    minPrice,
+    maxPrice,
+    handlePriceChange,
+
+}) => {
+
+    // const handleResetFilters = () => {
+    //     Reset all filter states to their initial values
+    //     setSelectedCategory(null);
+    //     setMinPrice(0);
+    //     setMaxPrice(1000);
+    //     setSearchText('');
+    // };
     return (
 
         <div className="p-4 text-gray-600 dark:text-gray-300 outline-none focus:outline-none mr-12">
@@ -117,12 +136,7 @@ const FilterSearch = ({ searchText, handleChange, setSearchText, minPrice, maxPr
                     onChange={handleChange}
                     placeholder="Search"
                     className="bg-white dark:bg-gray-800 h-10 flex px-5 w-full rounded-r-full text-sm focus:outline-none border-2 border-l-0 border-gray-500 dark:border-gray-600"
-                    autoComplete="off"
-                    spellCheck="false"
-                    required
-                    step="any"
-                    autoCapitalize="none"
-                    autoFocus />
+                />
                 {/* <button
                     type="submit"
                     className="absolute inset-y-0 right-0 mr-2 flex items-center px-2">

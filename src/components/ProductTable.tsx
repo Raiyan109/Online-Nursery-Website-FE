@@ -33,17 +33,28 @@ import { Label } from "@/components/ui/label"
 
 import { FormEvent, useState } from "react"
 import { useDeleteProductMutation, useGetProductQuery, useUpdateProductMutation } from "@/redux/features/productApi"
-import { Skeleton } from "./ui/skeleton"
+
 import { MdDelete, MdEdit } from "react-icons/md"
 import Loading from "./Loading"
 import Pagination from "./Pagination"
 import { toast } from "sonner"
 import { DialogClose } from "@radix-ui/react-dialog"
 
+export interface Product {
+    _id: string;
+    title: string;
+    category: string;
+    rating: string;
+    price: string;
+    image: string;
+    availableInStock: string;
+    description: string;
+}
+
 const ProductTable = () => {
     // States for pagination
     const [currentPage, setCurrentPage] = useState(1)
-    const [postPerPage, setPostPerPage] = useState(10)
+    const [postPerPage] = useState(10)
     // States for form
     const [productId, setProductId] = useState('');
     const [title, setTitle] = useState('')
@@ -59,14 +70,13 @@ const ProductTable = () => {
         refetchOnMountOrArgChange: true,
     })
     const [deleteProduct] = useDeleteProductMutation()
-    const [updateProduct, { isSuccess }] = useUpdateProductMutation()
+    const [updateProduct] = useUpdateProductMutation()
 
     // Remove function
-    const removeProduct = (id) => {
-
-        deleteProduct(id)
-        toast.success('product deleted')
-    }
+    const removeProduct = (id: string) => {
+        deleteProduct(id);
+        toast.success('Product deleted');
+    };
 
     // Update function
     const handleUpdateProduct = async (e: FormEvent) => {
@@ -103,7 +113,7 @@ const ProductTable = () => {
             <TableCaption>
                 {data?.data.length > 10 && <Pagination totalPosts={data?.data?.length} postsPerPage={postPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage} />}
             </TableCaption>
-            {error && <TableCaption>Error: {error.message}</TableCaption>}
+
             <TableHeader>
                 <TableRow>
                     <TableHead className="w-[100px] text-center">Image</TableHead>
@@ -115,7 +125,7 @@ const ProductTable = () => {
             </TableHeader>
             {!isLoading && !error && data && data?.data?.length > 0 && (
                 <TableBody>
-                    {currentResults?.map((product) => (
+                    {currentResults?.map((product: Product) => (
                         <TableRow key={product?._id}>
                             <TableCell className="text-center">
                                 <img src={product.image} alt="" className="w-8 h-8 object-contain" />

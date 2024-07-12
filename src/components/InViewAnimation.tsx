@@ -1,9 +1,12 @@
-import { useRef } from "react";
+import { ReactNode, useRef } from "react";
 import { useInView } from "framer-motion";
 
+interface InViewAnimationProps {
+    children: ReactNode;
+}
 
-const InViewAnimation = ({ children }) => {
-    const ref = useRef(null);
+const InViewAnimation: React.FC<InViewAnimationProps> = ({ children }) => {
+    const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true });
 
     return (
