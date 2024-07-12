@@ -38,12 +38,14 @@ import { MdDelete, MdEdit } from "react-icons/md"
 import Loading from "./Loading"
 import Pagination from "./Pagination"
 import { toast } from "sonner"
+import { DialogClose } from "@radix-ui/react-dialog"
 
 const ProductTable = () => {
     // States for pagination
     const [currentPage, setCurrentPage] = useState(1)
     const [postPerPage, setPostPerPage] = useState(10)
     // States for form
+    const [productId, setProductId] = useState('');
     const [title, setTitle] = useState('')
     const [category, setCategory] = useState('')
     const [rating, setRating] = useState('')
@@ -53,9 +55,11 @@ const ProductTable = () => {
     const [description, setDescription] = useState('')
 
     // Redux data
-    const { data, error, isLoading } = useGetProductQuery(undefined)
+    const { data, error, isLoading, refetch } = useGetProductQuery(undefined, {
+        refetchOnMountOrArgChange: true,
+    })
     const [deleteProduct] = useDeleteProductMutation()
-    const [updateProduct] = useUpdateProductMutation()
+    const [updateProduct, { isSuccess }] = useUpdateProductMutation()
 
     // Remove function
     const removeProduct = (id) => {
@@ -65,9 +69,8 @@ const ProductTable = () => {
     }
 
     // Update function
-    const handleUpdateProduct = async (e: FormEvent, id) => {
+    const handleUpdateProduct = async (e: FormEvent) => {
         e.preventDefault();
-        console.log(id);
 
         const productDetails = {
             title: title,
@@ -78,10 +81,10 @@ const ProductTable = () => {
             availableInStock: availableInStock,
             description: description,
         };
-        console.log(productDetails);
 
-        await updateProduct({ id, productDetails })
+        await updateProduct({ id: productId, ...productDetails });
         toast.success('Product updated')
+        refetch();
     };
 
     if (isLoading) {
@@ -121,10 +124,21 @@ const ProductTable = () => {
                             <TableCell className="font-medium text-center">{product.price}</TableCell>
                             <TableCell className="font-medium text-center">{product.category}</TableCell>
                             <TableCell className="font-medium flex items-center gap-3 justify-center">
-                                <button className="btn-white-square text-center px-1 py-1 bg-orange hover:bg-orange/90 rounded">
+                                <button
+                                    className="btn-white-square text-center px-1 py-1 bg-orange hover:bg-orange/90 rounded"
+                                    onClick={() => {
+                                        setProductId(product._id);
+                                        setTitle(product.title);
+                                        setCategory(product.category);
+                                        setRating(product.rating);
+                                        setPrice(product.price);
+                                        setImage(product.image);
+                                        setAvailableInStock(product.availableInStock);
+                                        setDescription(product.description);
+                                    }}
+                                >
                                     <Dialog>
                                         <DialogTrigger asChild>
-                                            {/* <Button variant="outline">Edit Profile</Button> */}
                                             <MdEdit className="text-xl" />
                                         </DialogTrigger>
                                         <DialogContent className="sm:max-w-[425px] bg-paste border-none">
@@ -134,88 +148,92 @@ const ProductTable = () => {
                                                     Make changes to your product here. Click save when you're done.
                                                 </DialogDescription>
                                             </DialogHeader>
-                                            <div className="grid gap-4 py-4">
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                    <Label htmlFor="title" className="text-right">
-                                                        Title
-                                                    </Label>
-                                                    <Input
-                                                        id="title"
-                                                        defaultValue={product.title}
-                                                        onChange={(e) => setTitle(e.target.value)}
-                                                        className="col-span-3"
-                                                    />
+                                            <form onSubmit={handleUpdateProduct}>
+                                                <div className="grid gap-4 py-4">
+                                                    <div className="grid grid-cols-4 items-center gap-4">
+                                                        <Label htmlFor="title" className="text-right">
+                                                            Title
+                                                        </Label>
+                                                        <Input
+                                                            id="title"
+                                                            value={title}
+                                                            onChange={(e) => setTitle(e.target.value)}
+                                                            className="col-span-3"
+                                                        />
+                                                    </div>
+                                                    <div className="grid grid-cols-4 items-center gap-4">
+                                                        <Label htmlFor="category" className="text-right">
+                                                            Category
+                                                        </Label>
+                                                        <Input
+                                                            id="category"
+                                                            value={category}
+                                                            onChange={(e) => setCategory(e.target.value)}
+                                                            className="col-span-3"
+                                                        />
+                                                    </div>
+                                                    <div className="grid grid-cols-4 items-center gap-4">
+                                                        <Label htmlFor="rating" className="text-right">
+                                                            Rating
+                                                        </Label>
+                                                        <Input
+                                                            id="rating"
+                                                            value={rating}
+                                                            onChange={(e) => setRating(e.target.value)}
+                                                            className="col-span-3"
+                                                        />
+                                                    </div>
+                                                    <div className="grid grid-cols-4 items-center gap-4">
+                                                        <Label htmlFor="price" className="text-right">
+                                                            Price
+                                                        </Label>
+                                                        <Input
+                                                            id="price"
+                                                            value={price}
+                                                            onChange={(e) => setPrice(e.target.value)}
+                                                            className="col-span-3"
+                                                        />
+                                                    </div>
+                                                    <div className="grid grid-cols-4 items-center gap-4">
+                                                        <Label htmlFor="image" className="text-right">
+                                                            Image
+                                                        </Label>
+                                                        <Input
+                                                            id="image"
+                                                            value={image}
+                                                            onChange={(e) => setImage(e.target.value)}
+                                                            className="col-span-3"
+                                                        />
+                                                    </div>
+                                                    <div className="grid grid-cols-4 items-center gap-4">
+                                                        <Label htmlFor="availableInStock" className="text-right">
+                                                            Available
+                                                        </Label>
+                                                        <Input
+                                                            id="availableInStock"
+                                                            value={availableInStock}
+                                                            onChange={(e) => setAvailableInStock(e.target.value)}
+                                                            className="col-span-3"
+                                                        />
+                                                    </div>
+                                                    <div className="grid grid-cols-4 items-center gap-4">
+                                                        <Label htmlFor="description" className="text-right">
+                                                            Description
+                                                        </Label>
+                                                        <Input
+                                                            id="description"
+                                                            value={description}
+                                                            onChange={(e) => setDescription(e.target.value)}
+                                                            className="col-span-3"
+                                                        />
+                                                    </div>
                                                 </div>
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                    <Label htmlFor="category" className="text-right">
-                                                        Category
-                                                    </Label>
-                                                    <Input
-                                                        id="category"
-                                                        defaultValue={product.category}
-                                                        onChange={(e) => setCategory(e.target.value)}
-                                                        className="col-span-3"
-                                                    />
-                                                </div>
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                    <Label htmlFor="rating" className="text-right">
-                                                        Rating
-                                                    </Label>
-                                                    <Input
-                                                        id="rating"
-                                                        defaultValue={product.rating}
-                                                        onChange={(e) => setRating(e.target.value)}
-                                                        className="col-span-3"
-                                                    />
-                                                </div>
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                    <Label htmlFor="price" className="text-right">
-                                                        Price
-                                                    </Label>
-                                                    <Input
-                                                        id="price"
-                                                        defaultValue={product.price}
-                                                        onChange={(e) => setPrice(e.target.value)}
-                                                        className="col-span-3"
-                                                    />
-                                                </div>
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                    <Label htmlFor="image" className="text-right">
-                                                        Image
-                                                    </Label>
-                                                    <Input
-                                                        id="image"
-                                                        defaultValue={product.image}
-                                                        onChange={(e) => setImage(e.target.value)}
-                                                        className="col-span-3"
-                                                    />
-                                                </div>
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                    <Label htmlFor="availableInStock" className="text-right">
-                                                        Available
-                                                    </Label>
-                                                    <Input
-                                                        id="availableInStock"
-                                                        defaultValue={product.availableInStock}
-                                                        onChange={(e) => setAvailableInStock(e.target.value)}
-                                                        className="col-span-3"
-                                                    />
-                                                </div>
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                    <Label htmlFor="description" className="text-right">
-                                                        Description
-                                                    </Label>
-                                                    <Input
-                                                        id="description"
-                                                        defaultValue={product.description}
-                                                        onChange={(e) => setDescription(e.target.value)}
-                                                        className="col-span-3"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <DialogFooter>
-                                                <Button type="submit" className="btn-black-square" onClick={(e) => handleUpdateProduct(e, product._id)}>Save changes</Button>
-                                            </DialogFooter>
+                                                <DialogFooter>
+                                                    <DialogClose asChild>
+                                                        <Button type="submit" className="btn-black-square">Save changes</Button>
+                                                    </DialogClose>
+                                                </DialogFooter>
+                                            </form>
                                         </DialogContent>
                                     </Dialog>
                                 </button>
