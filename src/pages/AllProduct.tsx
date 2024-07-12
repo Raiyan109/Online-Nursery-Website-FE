@@ -66,7 +66,7 @@ const TiltCard = ({ item }) => {
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onClick={goToProductDetailsPage}
+
       style={{
         transformStyle: "preserve-3d",
         transform,
@@ -81,6 +81,7 @@ const TiltCard = ({ item }) => {
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
+        onClick={goToProductDetailsPage}
         className="absolute inset-4 grid place-content-center rounded-xl bg-white shadow-lg"
       >
 
@@ -120,7 +121,7 @@ const TiltCard = ({ item }) => {
         <button style={{
           transform: "translateZ(15px)",
         }}
-          className="mx-auto text-sm absolute bottom-6 right-5 text-black font-bold btn-green-square">
+          className="mx-auto text-sm absolute bottom-6 right-5 text-black font-bold btn-green-square z-20">
           Add To Cart
         </button>
       </div>

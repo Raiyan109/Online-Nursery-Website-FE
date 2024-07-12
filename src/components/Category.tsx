@@ -5,15 +5,24 @@ import { useRef } from "react";
 import InViewRight from "./InViewRight";
 
 const Category = () => {
-
+  const { data, isLoading } = useGetCategoriesQuery(undefined)
 
   return (
-    <div className="pt-20 px-12">
+    <div className="py-32">
       <InViewAnimation>
-        <h1 className="text-6xl text-white font-bold -mb-28">Most Popular Categories</h1>
+        <h1 className="text-6xl text-white font-bold pb-10 lg:px-28 px-0 text-center lg:text-left">Most Popular Categories</h1>
       </InViewAnimation>
       <InViewRight>
-        <HorizontalScrollCarousel />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 mt-32 px-5 lg:px-3">
+          {data?.data?.map((item) => (
+            <div className="flex flex-col items-center justify-center gap-8" key={item?._id}>
+              <div className="rounded-2xl">
+                <img src={item?.image} alt="" className="w-96 h-56 object-cover rounded-[100px]" />
+              </div>
+              <div className="btn-green-rounded text-2xl  py-2 rounded-full max-w-3xl flex justify-center items-center">{item?.category}</div>
+            </div>
+          ))}
+        </div>
       </InViewRight>
       {/* bg-neutral-800 */}
       <div className="">
@@ -33,51 +42,6 @@ const Category = () => {
   )
 }
 
-const HorizontalScrollCarousel = () => {
-  const { data, error, isLoading } = useGetCategoriesQuery(undefined)
 
-  const targetRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-  });
-
-  const x = useTransform(scrollYProgress, [0, 1], ["28%", "-75%"]);
-
-  return (
-    // bg-neutral-900
-    <section ref={targetRef} className="relative h-[300vh]">
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <motion.div style={{ x }} className="flex gap-4">
-          {data?.data?.map((card) => {
-            return <Card card={card} key={card.id} />;
-          })}
-        </motion.div>
-      </div>
-    </section>
-  );
-};
-
-const Card = ({ card }) => {
-  return (
-    <div
-      key={card._id}
-      className="group relative h-[450px] w-[450px] overflow-hidden bg-neutral-200"
-    >
-      <div
-        style={{
-          backgroundImage: `url(${card.image})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-        className="absolute inset-0 z-0 transition-transform duration-300 group-hover:scale-110"
-      ></div>
-      <div className="absolute inset-0 z-10 grid place-content-center">
-        <p className="bg-gradient-to-br from-white/20 to-white/0 p-8 text-6xl font-black uppercase text-white backdrop-blur-lg">
-          {card.category}
-        </p>
-      </div>
-    </div>
-  );
-};
 
 export default Category
