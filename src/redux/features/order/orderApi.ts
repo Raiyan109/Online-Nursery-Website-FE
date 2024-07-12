@@ -16,8 +16,14 @@ const orderApi = baseApi.enhanceEndpoints({ addTagTypes: ['order'] }).injectEndp
                 url: '/orders',
                 method: 'GET'
             }),
-        })
+        }),
+        getConfig: builder.query({
+            query: () => ({
+                url: '/orders/config',
+                method: 'GET'
+            }),
+        }),
     }),
 });
 
-export const { useCreateOrderMutation, useGetOrdersQuery } = orderApi;
+export const { useCreateOrderMutation, useGetOrdersQuery, useGetConfigQuery } = orderApi;

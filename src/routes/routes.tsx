@@ -6,6 +6,7 @@ import Cart from "@/pages/Cart";
 import Dashboard from "@/pages/Dashboard";
 import Home from "@/pages/Home";
 import OrderSummary from "@/pages/OrderSummary";
+import Success from "@/pages/Success";
 import { createBrowserRouter } from "react-router-dom";
 
 
@@ -43,6 +44,10 @@ const routes = createBrowserRouter([
     {
         path: '/order',
         element: <OrderSummary />
+    },
+    {
+        path: '/success',
+        element: <Success />
     },
 ])
 

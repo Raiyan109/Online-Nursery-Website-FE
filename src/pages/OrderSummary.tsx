@@ -1,9 +1,55 @@
-import { useGetOrdersQuery } from '@/redux/features/order/orderApi';
+import { useGetConfigQuery, useGetOrdersQuery } from '@/redux/features/order/orderApi';
 import { useAppSelector } from '@/redux/hooks';
+import { useEffect, useState } from 'react';
+import axios from 'axios'
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import InjectCheck from './InjectCheck';
 
 const OrderSummary = () => {
+    const [stripePromise, setStripePromise] = useState(null);
+    const [clientSec, setClientSec] = useState("");
     const { data, isLoading, Error } = useGetOrdersQuery(undefined);
+    const { data: config } = useGetConfigQuery(undefined);
     const cart = useAppSelector((state) => state.cart)
+
+    useEffect(() => {
+        (async () => {
+            const res = await axios.get('http://localhost:5000/api/v1/orders/config')
+            setStripePromise(loadStripe(res.data.publishableKey));
+        })()
+    }, [])
+    console.log(stripePromise);
+
+    useEffect(() => {
+        const createStripe = async () => {
+            try {
+                const res = await axios.post('http://localhost:5000/api/v1/orders/stripe', {
+                    amount: cart.cartTotalAmount
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                console.log(res.data.data);
+                setClientSec(res.data.data);
+            } catch (error) {
+                console.error("Error creating order", error);
+            }
+        };
+
+
+        createStripe();
+
+    }, [])
+
+    const appearance = {
+        theme: 'stripe',
+    };
+    const options = {
+        clientSecret: clientSec,
+        appearance,
+    };
 
 
     return (
@@ -50,7 +96,12 @@ const OrderSummary = () => {
             </div> */}
                     <button type="submit"
                         className="w-full text-center btn-black-square py-3 px-6 font-semibold text-lg transition-all duration-500 rounded-2xl mt-9">Pay Now</button>
-                    {/* bg-indigo-600 rounded-xl py-3 px-6 font-semibold text-lg text-white transition-all duration-500 hover:bg-indigo-700 */}
+                    {clientSec && (
+                        <Elements stripe={stripePromise} options={options}>
+                            <InjectCheck />
+                            {/* <InjectCheck clientSecret={clientSec} /> */}
+                        </Elements>
+                    )}
 
                 </div>
             </div></div>
