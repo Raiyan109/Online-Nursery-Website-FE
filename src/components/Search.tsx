@@ -38,7 +38,7 @@ const Search = () => {
             </div>
 
             {/*  Search Results */}
-            <div className="bg-gradient-to-r from-lime-400 to-lime-600 opacity-85 absolute top-20">
+            <div className="bg-gradient-to-r from-lime-400 to-lime-600 opacity-85 absolute top-48 md:top-20">
                 {
                     query &&
                     <div className="flex flex-col divide-y divide-gray-200">
