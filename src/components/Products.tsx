@@ -9,7 +9,6 @@ const Products = () => {
   const { data, error, isLoading } = useGetProductQuery(undefined)
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
-  console.log(data?.data);
 
 
   let filters = ["Outdoor plants", "Blooms", "Orchids", "House plants", "Pet friendly plants"];

@@ -10,6 +10,8 @@ import FilterSearch from "@/components/FilterSearch"
 
 const AllProducts = () => {
   const [searchText, setSearchText] = useState('')
+  const [minPrice, setMinPrice] = useState(0)
+  const [maxPrice, setMaxPrice] = useState(1000)
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   // States for pagination
@@ -24,6 +26,12 @@ const AllProducts = () => {
     setSearchText(e.currentTarget.value.toLowerCase());
   };
 
+  // Range filter handler
+  const handlePriceChange = (values: number[]) => {
+    const [min, max] = values;
+    setMinPrice(min);
+    setMaxPrice(max);
+  };
   const handleFilterButtonClick = (selectedCategory) => {
     if (selectedFilters.includes(selectedCategory)) {
       let filters = selectedFilters.filter((el) => el !== selectedCategory);
@@ -35,7 +43,7 @@ const AllProducts = () => {
 
   useEffect(() => {
     filterItems();
-  }, [selectedFilters, searchText, data]);
+  }, [selectedFilters, searchText, data, minPrice, maxPrice]);
 
   const filterItems = () => {
     let tempItems = data?.data || [];
@@ -53,6 +61,11 @@ const AllProducts = () => {
         item.title.toLowerCase().includes(searchText)
       );
     }
+
+    // Apply price filter
+    tempItems = tempItems.filter(
+      (item) => item.price >= minPrice && item.price <= maxPrice
+    );
 
     setFilteredItems(tempItems);
   };
@@ -74,7 +87,7 @@ const AllProducts = () => {
           <h1 className="text-6xl text-white font-bold pb-10 lg:px-28 px-0 text-center lg:text-left">All Plants</h1>
         </InViewAnimation>
         <InViewRight>
-          <FilterSearch searchText={searchText} handleChange={handleChange} setSearchText={setSearchText} />
+          <FilterSearch searchText={searchText} handleChange={handleChange} setSearchText={setSearchText} minPrice={minPrice} maxPrice={maxPrice} setMaxPrice={setMaxPrice} setMinPrice={setMinPrice} handlePriceChange={handlePriceChange} />
         </InViewRight>
       </div>
       <div className="buttons-container">
