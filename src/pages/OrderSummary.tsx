@@ -18,7 +18,7 @@ const OrderSummary = () => {
 
     useEffect(() => {
         (async () => {
-            const res = await axios.get('http://localhost:5000/api/v1/orders/config')
+            const res = await axios.get('https://online-nursery-website-be.vercel.app/api/v1/orders/config')
             setStripePromise(loadStripe(res.data.publishableKey));
         })()
     }, [])
@@ -27,7 +27,7 @@ const OrderSummary = () => {
     useEffect(() => {
         const createStripe = async () => {
             try {
-                const res = await axios.post('http://localhost:5000/api/v1/orders/stripe', {
+                const res = await axios.post('https://online-nursery-website-be.vercel.app/api/v1/orders/stripe', {
                     amount: cart.cartTotalAmount
                 }, {
                     headers: {
