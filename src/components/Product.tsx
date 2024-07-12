@@ -121,7 +121,7 @@ const TiltCard = ({ item }) => {
           style={{
             transform: "translateZ(35px)",
           }}
-          className="mx-auto text-xl absolute bottom-3 text-lightGreen font-bold"
+          className="mx-auto text-xl absolute bottom-1 -left-1 text-lightGreen font-bold"
         >
 
           <ProductRating item={item} />

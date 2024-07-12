@@ -13,9 +13,9 @@ const ProductRating = ({ item }) => {
         return (
             <div className='flex items-start justify-start'>
                 {[...Array(fullStars)].map((_, index) => (
-                    <FaStar key={index} color="yellow" />
+                    <FaStar key={index} color="#70e000" />
                 ))}
-                {halfStar && <FaStarHalfAlt color="yellow" />}
+                {halfStar && <FaStarHalfAlt color="#70e000" />}
                 {[...Array(emptyStars)].map((_, index) => (
                     <FaStar key={index} color="gray" />
                 ))}
