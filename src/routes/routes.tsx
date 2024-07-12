@@ -5,6 +5,7 @@ import AllProducts from "@/pages/AllProducts";
 import Cart from "@/pages/Cart";
 import Dashboard from "@/pages/Dashboard";
 import Home from "@/pages/Home";
+import OrderSummary from "@/pages/OrderSummary";
 import { createBrowserRouter } from "react-router-dom";
 
 
@@ -38,6 +39,10 @@ const routes = createBrowserRouter([
     {
         path: '/cart',
         element: <Cart />
+    },
+    {
+        path: '/order',
+        element: <OrderSummary />
     },
 ])
 
