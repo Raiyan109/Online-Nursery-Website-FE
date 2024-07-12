@@ -31,9 +31,9 @@ const Search = () => {
     return (
         <div>
             <div className="relative">
-                <input type="text" name="q" className="w-full border h-12 shadow p-4 rounded-full dark:text-gray-800 dark:border-gray-700 dark:bg-gray-200" placeholder="Search" onChange={handleChange} />
+                <input type="text" name="q" className="w-full border h-9 shadow p-4 rounded-full dark:text-gray-800 dark:border-gray-700 dark:bg-gray-200" placeholder="Search" onChange={handleChange} />
                 <button type="submit">
-                    <IoSearchOutline className="text-lightGreen font-bold h-5 w-5 absolute top-3.5 right-3" />
+                    <IoSearchOutline className="text-lightGreen font-bold h-5 w-5 absolute top-2 right-3" />
                 </button>
             </div>
 

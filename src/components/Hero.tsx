@@ -1,4 +1,4 @@
-import bg from '@/assets/hero-video.mp4'
+import bg from '@/assets/nursery1_2.mp4'
 import styles from '@/styles/hero.module.css'
 import { Link } from 'react-router-dom'
 const Hero = () => {

@@ -7,6 +7,7 @@ import {
 } from "framer-motion";
 import { FiMousePointer } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import ProductRating from "@/components/ProductRating";
 
 const AllProduct = ({ item }) => {
 
@@ -115,7 +116,7 @@ const TiltCard = ({ item }) => {
           }}
           className="mx-auto text-xl absolute bottom-3 left-5 text-lightGreen font-bold"
         >
-          {item?.rating}
+          <ProductRating item={item} />
         </p>
 
         <button style={{

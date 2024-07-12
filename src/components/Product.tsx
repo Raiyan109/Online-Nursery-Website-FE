@@ -1,13 +1,15 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   motion,
   useMotionTemplate,
   useMotionValue,
   useSpring,
 } from "framer-motion";
+import { FaStar } from 'react-icons/fa'
 import { useAppDispatch } from "@/redux/hooks";
 import { addToCart } from "@/redux/features/cart/cartSlice";
 import { useNavigate } from "react-router-dom";
+import ProductRating from "./ProductRating";
 
 const Product = ({ item }) => {
   return (
@@ -21,6 +23,8 @@ const ROTATION_RANGE = 32.5;
 const HALF_ROTATION_RANGE = 32.5 / 2;
 
 const TiltCard = ({ item }) => {
+  const [rating, setRating] = useState(null)
+  const [rateColor, setRateColor] = useState(null)
   const dispatch = useAppDispatch()
 
   const handleAddToCart = (item) => {
@@ -113,14 +117,15 @@ const TiltCard = ({ item }) => {
           {item?.price}
         </p>
 
-        <p
+        <div
           style={{
             transform: "translateZ(35px)",
           }}
-          className="mx-auto text-xl absolute bottom-3 left-5 text-lightGreen font-bold"
+          className="mx-auto text-xl absolute bottom-3 text-lightGreen font-bold"
         >
-          {item?.rating}
-        </p>
+
+          <ProductRating item={item} />
+        </div>
 
         <button style={{
           transform: "translateZ(15px)",

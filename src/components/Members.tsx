@@ -128,10 +128,10 @@ const LinkBox = ({ Icon, href }) => {
             onMouseLeave={(e) => {
                 handleMouseLeave(e);
             }}
-            className="relative grid h-20 w-full place-content-center sm:h-28 md:h-36"
+            className="relative grid  w-full place-content-center h-44 md:h-36"
         >
             {typeof Icon === "string" ? (
-                <img src={Icon} alt="member" className="text-xl sm:text-3xl lg:text-4xl w-20 h-20 md:w-32 md:h-32 object-contain" />
+                <img src={Icon} alt="member" className="text-xl sm:text-3xl lg:text-4xl w-40 h-40 md:w-32 md:h-32 object-contain" />
             ) : (
                 <Icon className="text-xl sm:text-3xl lg:text-4xl" />
             )}
