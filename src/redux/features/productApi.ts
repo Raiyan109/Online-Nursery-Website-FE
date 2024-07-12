@@ -30,8 +30,16 @@ const productApi = baseApi.enhanceEndpoints({ addTagTypes: ['product'] }).inject
                 body: products
             }),
             invalidatesTags: ['product']
+        }),
+        updateProduct: builder.mutation({
+            query: ({ id, ...data }) => ({
+                url: `/products/${id}`,
+                method: "PATCH",
+                body: data
+            }),
+            invalidatesTags: ['product']
         })
     }),
 });
 
-export const { useGetProductQuery, useDeleteProductMutation, useGetCategoriesQuery, useGetProductDetailsQuery, useAddProductMutation } = productApi;
+export const { useGetProductQuery, useDeleteProductMutation, useGetCategoriesQuery, useGetProductDetailsQuery, useAddProductMutation, useUpdateProductMutation } = productApi;
